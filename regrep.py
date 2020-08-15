@@ -14,7 +14,7 @@ parser.add_argument("-name", type=str, nargs="?", default="*")
 
 args = parser.parse_args()
 
-name_regex = args.name.replace(".", "\.").replace("*", ".*")
+name_regex = re.escape(args.name).replace("\*", ".*")
 
 name_prog = re.compile(name_regex)
 expression_prog = re.compile(args.expression.encode("utf8"))
@@ -32,5 +32,5 @@ for root, dirs, files in os.walk(args.directory):
 			if result:
 				print(filename, result)
 		
-		print("files searched: "+str(count)+"\r", end="")
+		print("Files searched: "+str(count)+"\r", end="")
 		count+=1
