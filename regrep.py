@@ -26,7 +26,10 @@ for root, dirs, files in os.walk(args.directory):
 		if re.match(name_prog, file):
 			filename = os.path.join(root, file)
 			
-			data = open(filename, "rb").read()
+			try:
+				data = open(filename, "rb").read()
+			except FileNotFoundError as e:
+				continue
 			
 			result = re.search(expression_prog, data)
 			if result:
